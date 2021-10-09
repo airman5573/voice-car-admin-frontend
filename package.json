@@ -1,0 +1,53 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npx webpack serve",
+    "build": "npx webpack"
+  },
+  "author": "airman5573",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/lodash": "^4.14.170",
+    "@types/node": "^15.0.2",
+    "@types/react": "^17.0.5",
+    "@types/react-dom": "^17.0.3",
+    "@types/react-redux": "^7.1.16",
+    "@types/react-router-dom": "^5.1.7",
+    "autoprefixer": "^10.2.5",
+    "clean-webpack-plugin": "^4.0.0-alpha.0",
+    "copy-webpack-plugin": "^8.1.1",
+    "css-loader": "^5.2.4",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.3.1",
+    "mini-css-extract-plugin": "^1.6.0",
+    "postcss": "^8.2.14",
+    "postcss-loader": "^5.2.0",
+    "sass": "^1.32.12",
+    "sass-loader": "^11.0.1",
+    "ts-loader": "^9.1.2",
+    "typescript": "^4.2.4",
+    "webpack": "^5.36.2",
+    "webpack-cli": "^4.7.0",
+    "webpack-dev-server": "^3.11.2"
+  },
+  "dependencies": {
+    "@apollo/client": "^3.3.19",
+    "@reduxjs/toolkit": "^1.5.1",
+    "bootstrap": "^5.0.0",
+    "graphql": "^15.5.0",
+    "lodash": "^4.17.21",
+    "react": "^17.0.2",
+    "react-bootstrap": "^1.6.4",
+    "react-dom": "^17.0.2",
+    "react-hook-form": "^7.6.2",
+    "react-masonry-css": "^1.0.16",
+    "react-redux": "^7.2.4",
+    "react-router-dom": "^5.2.0",
+    "react-toastify": "^7.0.4",
+    "redux": "^4.1.0"
+  }
+}
