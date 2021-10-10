@@ -49,6 +49,6 @@ export namespace VC {
 }
 declare global {
   interface Window {
-    __group__: 'a' | 'b'
+    __group__: string
   }
 }

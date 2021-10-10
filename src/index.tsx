@@ -5,9 +5,9 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from "./redux/index";
 
-if (window.__group__ === undefined) {
-  window.__group__ = 'a';
-}
+window.__group__ = (window.location.href.trim().split("."))[0];
+
+console.log("window.__group__", window.__group__);
 
 render(
   <Provider store={store}>
