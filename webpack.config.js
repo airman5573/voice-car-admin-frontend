@@ -46,6 +46,9 @@ let config = {
     new CleanWebpackPlugin({
       cleanAfterEveryBuildPatterns: ['dist'],
     }),
+    new webpack.DefinePlugin({
+      __DEVELOPMENT__: JSON.stringify(false)
+    }),
     require('autoprefixer')
   ],
   resolve: {
