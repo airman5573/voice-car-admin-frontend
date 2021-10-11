@@ -5,7 +5,8 @@ import App from './App';
 import { Provider } from 'react-redux';
 import store from "./redux/index";
 
-window.__group__ = (window.location.href.trim().split("."))[0].slice(0, -1);
+let group = ((window.location.href.trim().split("."))[0]).replace('http://', '');
+window.__group__ = group;
 
 console.log("window.__group__", window.__group__);
 
