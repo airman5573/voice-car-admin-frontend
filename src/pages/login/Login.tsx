@@ -10,18 +10,24 @@ import { LOGIN } from "../../utils/query";
 import { _toast } from "../../utils";
 
 const Login = () => {
-  const token = localStorage.getItem(ACCESSTOKEN_ID);
+  const [token, setToken] = useState<string|null>(localStorage.getItem(ACCESSTOKEN_ID));
   const [errorMessage, setErrorMessage] = useState<string>();
   const [loading, setLoading] = useState<boolean>(false);
   const { register, handleSubmit, formState: { errors } } = useForm<VC.AdminPasswordFormValue>();
   const onSubmit = ({ password }: VC.AdminPasswordFormValue) => {
     setLoading(true);
     client.query<{login: string}>({ query: LOGIN, variables: { password } })
-      .then(({ data }) => {
+      .then(({ errors, data }) => {
+        if (errors && errors.length > 0) {
+          let message = errors[0].message;
+          setErrorMessage(message);
+          setLoading(false);
+          _toast.error(message);
+          return;
+        }
         const { login: token } = data;
         localStorage.setItem(ACCESSTOKEN_ID, token);
-        setErrorMessage(undefined);
-        setLoading(false);
+        setToken(token);
       })
       .catch((err: ApolloError) => {
         setLoading(false);

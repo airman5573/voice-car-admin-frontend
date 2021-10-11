@@ -48,7 +48,6 @@ export namespace VC {
   }
 }
 declare global {
-  interface Window {
-    __group__: string
-  }
+  interface Window { __group__: string }
+  const __DEVELOPMENT__: Boolean;
 }

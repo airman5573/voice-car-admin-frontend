@@ -2,11 +2,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const join = require('path').join;
+const webpack = require('webpack');
 
-module.exports = {
-  mode: 'development',
+let config = {
   entry: join(__dirname, '/src/index.tsx'),
-  devtool: 'source-map',
   output: {
     filename: "main.js",
     path: join(__dirname, '/dist'),
@@ -52,16 +51,26 @@ module.exports = {
   resolve: {
     extensions: [".ts", ".tsx", ".js", ".jsx", "scss"]
   },
-  devServer: {
-    historyApiFallback: true,
-    contentBase: join(__dirname, 'dist'),
-    compress: true,
-    port: 9000,
-    proxy: {
-      '/graphql': {
-        target: 'http://localhost:8080',
-        changeOrigin: true
-      },
+};
+
+module.exports = (env, argv) => {
+  if (argv.mode == 'development') {
+    config.devtool = 'source-map';
+    config.devServer = {
+      historyApiFallback: true,
+      contentBase: join(__dirname, 'dist'),
+      compress: true,
+      port: 9000,
+      proxy: {
+        '/graphql': {
+          target: 'http://localhost:8080',
+          changeOrigin: true
+        },
+      }
     }
-  },
+    config.plugins.push(new webpack.DefinePlugin({
+      __DEVELOPMENT__: JSON.stringify(true)
+    }))
+  }
+  return config;
 };
