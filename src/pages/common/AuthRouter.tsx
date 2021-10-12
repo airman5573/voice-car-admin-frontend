@@ -2,7 +2,7 @@ import React, { FC, ReactElement, useEffect, useState } from "react";
 import { Route, Redirect } from "react-router-dom";
 import { VC } from "../../utils/types";
 import { ACCESSTOKEN_ID } from "../../utils/const";
-import { LOGIN, VERIFY_ACCESS_TOKEN } from "../../utils/query";
+import { VERIFY_ACCESS_TOKEN } from "../../utils/query";
 import { client } from "../../utils/global";
 import { ApolloError } from "@apollo/client";
 import { getErrorCode } from "../../utils";
