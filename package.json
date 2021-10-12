@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx webpack serve --mode=development",
+    "pre-run": "install-changed",
     "build": "npx webpack --mode=production"
   },
   "author": "airman5573",
@@ -39,6 +40,7 @@
     "@reduxjs/toolkit": "^1.5.1",
     "bootstrap": "^5.0.0",
     "graphql": "^15.5.0",
+    "install-changed": "^1.1.0",
     "lodash": "^4.17.21",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.4",
