@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import {Container, Row, Form, Button} from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { VC } from "../../utils/types";
-import { RouterProps, withRouter, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { ACCESSTOKEN_ID } from "../../utils/const";
 import { client } from "../../utils/global";
 import { ApolloError } from "@apollo/client";
