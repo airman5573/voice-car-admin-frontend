@@ -1,7 +1,7 @@
 import { ApolloError } from "@apollo/client";
 import { unwrapResult } from "@reduxjs/toolkit";
 import React, { useState, useEffect, FC } from "react";
-import { Card, Button, Modal } from "react-bootstrap";
+import { Card, Button, Modal, Form } from "react-bootstrap";
 import { RootState, useAppDispatch, useAppSelector } from "../../../redux";
 import { fetchAdminPassword } from "../../../redux/features/adminPasswordSlice";
 import { fetchControlMode } from "../../../redux/features/controlModeSlice";
@@ -11,79 +11,69 @@ import { getErrorCode, _toast } from "../../../utils";
 import { client } from "../../../utils/global";
 import { RESET_SIMILARWORDS, VACATE_SIMILARWORDS, RESET_SPEEDS, VACATE_SPEEDS, RESET } from "../../../utils/query";
 import { VC } from "../../../utils/types";
+import { fetchEditable, updateEditableSimilarWords, updateEditableSpeeds } from "../../../redux/features/editableSlice";
 
 type ButtonContainerProps = {
   variant: string,
   openModal: (title: string, message: string, callback: () => Promise<any>) => void
 }
 
-const VCResetSimilarWordsBtn: React.FC<ButtonContainerProps> = ({ variant, openModal }) => {
+const VCEditableSimilarWordsRadio: React.FC<ButtonContainerProps> = ({ variant, openModal }) => {
+  const { editableSimilarWords, fetchPending, updatePending, fetchError, updateError } = useAppSelector((state: RootState) => state.editable);
   const dispatch = useAppDispatch();
-  const onClick = () => {
-    const callback = () => {
-      return client.mutate({ mutation: RESET_SIMILARWORDS }).then(() => { dispatch(fetchTeamCommands()); });
-    };
-    openModal("음성인식 기본값설정", "유사단어를 미리 입력해놓은 기본값으로 설정합니다", callback);
-  }
+  useEffect(() => { dispatch(fetchEditable()); }, []);
   return (
-    <Button variant={variant} onClick={onClick}>음성인식 기본값설정</Button>
+    <Form>
+      <Form.Check
+        checked={editableSimilarWords}
+        disabled={fetchPending || updatePending}
+        className="mb-3"
+        name="vc-editable-similarwords"
+        type="radio"
+        label="유사단어 수정 가능"
+        id="vc-editable-similarwords-enable"
+        onChange={() => { dispatch(updateEditableSimilarWords(true)) }}>
+      </Form.Check>
+      <Form.Check
+        checked={!editableSimilarWords}
+        disabled={fetchPending || updatePending}
+        name="vc-editable-similarwords"
+        type="radio"
+        label="유사단어 수정 불가능"
+        id="vc-editable-similarwords-disable"
+        onChange={() => { dispatch(updateEditableSimilarWords(false)) }}>
+      </Form.Check>
+    </Form>
   );
 }
 
-const VCVacateSimilarWordsBtn: React.FC<ButtonContainerProps> = ({ variant, openModal }) => {
+const RCEditableSpeedsRadio: React.FC<ButtonContainerProps> = ({ variant, openModal }) => {
   const dispatch = useAppDispatch();
-  const onClick = () => {
-    const callback = () => {
-      return client.mutate({ mutation: VACATE_SIMILARWORDS }).then(() => { dispatch(fetchTeamCommands()); });
-    };
-    openModal("음성인식 공장초기화", "모든 유사단어를 삭제합니다", callback);
-  }
+  const { editableSpeeds, fetchPending, updatePending, fetchError, updateError } = useAppSelector((state: RootState) => state.editable);
+  useEffect(() => { dispatch(fetchEditable()); }, []);
   return (
-    <Button variant={variant} onClick={onClick}>음성인식 공장초기화</Button>
+    <Form>
+      <Form.Check
+        checked={editableSpeeds}
+        disabled={fetchPending || updatePending}
+        className="mb-3"
+        name="vc-editable-speeds"
+        type="radio"
+        label="속도값 수정 가능"
+        id="vc-editable-speeds-enable"
+        onChange={() => { dispatch(updateEditableSpeeds(true)) }}>
+      </Form.Check>
+      <Form.Check
+        checked={!editableSpeeds}
+        disabled={fetchPending || updatePending}
+        name="vc-editable-speeds"
+        type="radio"
+        label="속도값 수정 불가능"
+        id="vc-editable-speeds-disable"
+        onChange={() => { dispatch(updateEditableSpeeds(false)) }}>
+      </Form.Check>
+    </Form>
   );
-}
-
-const RCResetSpeedBtn: React.FC<ButtonContainerProps> = ({ variant, openModal }) => {
-  const dispatch = useAppDispatch();
-  const onClick = () => {
-    const callback = () => {
-      return client.mutate({ mutation: RESET_SPEEDS }).then(() => { dispatch(fetchTeamCommands()); });
-    };
-    openModal("리모콘 기본값설정", "속도값을 미리 입력해놓은 기본값으로 되돌립니다", callback);
-  }
-  return (
-    <Button variant={variant} onClick={onClick}>리모콘 기본값설정</Button>
-  );
-}
-
-const RCVacateSpeedBtn: React.FC<ButtonContainerProps> = ({ variant, openModal }) => {
-  const dispatch = useAppDispatch();
-  const onClick = () => {
-    const callback = () => {
-      return client.mutate({ mutation: VACATE_SPEEDS }).then(() => { dispatch(fetchTeamCommands()); });
-    };
-    openModal("리모콘 공장초기화", "속도값을 모두 0으로 설정합니다", callback);
-  }
-  return (
-    <Button variant={variant} onClick={onClick}>리모콘 공장초기화</Button>
-  );
-}
-
-const TotalResetBtn: React.FC<ButtonContainerProps> = ({ variant, openModal }) => {
-  const dispatch = useAppDispatch();
-  const onClick = () => {
-    const callback = () => {
-      return client.mutate({ mutation: RESET }).then(() => {
-        dispatch(fetchAdminPassword());
-        dispatch(fetchAllTeamPasswords());
-        dispatch(fetchControlMode());
-      });
-    }
-    openModal("전체 초기화", "관리자비밀번호, 팀 비밀번호, 컨트롤모드(음성/리모콘), 속도값, 유사단어를 기본값으로 설정합니다", callback);
-  }
-  return (
-    <Button variant={variant} onClick={onClick}>전체 초기화</Button>
-  )
 }
 
 const Reset = ({}) => {
@@ -123,27 +113,13 @@ const Reset = ({}) => {
   return (
     <Card>
       <Card.Body>
-        <Card.Title>초기화</Card.Title>
-        <Card.Subtitle className="mb-3 text-muted">기본값으로 돌려놓습니다</Card.Subtitle>
+        <Card.Title>수정모드변경</Card.Title>
+        <Card.Subtitle className="mb-3 text-muted">수정가능 여부를 설정합니다</Card.Subtitle>
         { controlMode == 'vc' &&
-          <>
-            <div className="mb-3">
-              <VCResetSimilarWordsBtn variant="primary" openModal={openModal}/>
-            </div>
-            <div className="mb-3">
-              <VCVacateSimilarWordsBtn variant="danger" openModal={openModal}/>
-            </div>
-          </>
+          <VCEditableSimilarWordsRadio variant="primary" openModal={openModal}/>
         }
         { controlMode == 'rc' &&
-          <>
-            <div className="mb-3">
-              <RCResetSpeedBtn variant="primary" openModal={openModal}/>
-            </div>
-            <div className="mb-3">
-              <RCVacateSpeedBtn variant="danger" openModal={openModal}/>
-            </div>
-          </>
+          <RCEditableSpeedsRadio variant="primary" openModal={openModal} />
         }
       </Card.Body>
 

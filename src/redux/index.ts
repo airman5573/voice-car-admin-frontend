@@ -4,12 +4,14 @@ import adminPasswordReducer from "./features/adminPasswordSlice";
 import controlModeReducer from "./features/controlModeSlice";
 import teamPasswordReducer from "./features/teamPasswordSlice";
 import commandTableReducer from "./features/commandTableSlice";
+import editableReducer from "./features/editableSlice";
 
 const reducer = combineReducers({
   adminPassword: adminPasswordReducer,
   controlMode: controlModeReducer,
   teamPasswords: teamPasswordReducer,
-  teamCommands: commandTableReducer
+  teamCommands: commandTableReducer,
+  editable: editableReducer
 });
 export type RootState = ReturnType<typeof reducer>;
 const store = configureStore({ reducer });

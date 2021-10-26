@@ -40,6 +40,27 @@ export const UPDATE_CONTROLMODE = gql `
   }
 `;
 
+export const FETCH_EDITABLE = gql `
+  query {
+    meta {
+      editableSimilarWords,
+      editableSpeeds,
+    }
+  }
+`;
+
+export const UPDATE_EDITABLE_SIMILARWORDS = gql `
+  mutation updateEditableSimilarWords($editable: Boolean) {
+    updateEditableSimilarWords(editable: $editable)
+  }
+`;
+
+export const UPDATE_EDITABLE_SPEEDS = gql `
+  mutation updateEditableSpeeds($editable: Boolean) {
+    updateEditableSpeeds(editable: $editable)
+  }
+`;
+
 export const FETCH_ALL_TEAM_PASSWORDS = gql `
   query {
     allTeamPasswords {
