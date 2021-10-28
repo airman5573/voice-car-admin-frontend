@@ -6,8 +6,9 @@ import { $CombinedState } from "redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { _toast } from "../../../utils";
 import { client } from "../../../utils/global";
-import { RESET_SPEEDS } from "../../../utils/query";
+import { RESET_SIMILARWORDS, RESET_SPEEDS } from "../../../utils/query";
 import { fetchTeamCommands } from "../../../redux/features/commandTableSlice";
+import { updateEditableSimilarWords, updateEditableSpeeds } from "../../../redux/features/editableSlice";
 
 const ControlMode = () => {
   const dispatch = useAppDispatch();
@@ -29,13 +30,21 @@ const ControlMode = () => {
                 label="음성인식"
                 name="controlmode"
                 id="controlmode-voice"
-                onChange={() => {
+                onChange={ async () => {
+                  // controlMode 를 Voice로 변경
                   dispatch(updateControlMode("vc")).then(unwrapResult)
-                    .then(data => { 
-                      client.mutate({ mutation: RESET_SPEEDS }).then(() => { 
-                        dispatch(fetchTeamCommands());
-                        _toast.success("음성인식으로 변경했습니다"); });
-                      });
+                    .then(data => {
+                      _toast.success("음성인식으로 변경했습니다");
+                    });
+
+                  // 속도값은 기본값으로 변경
+                  client.mutate({ mutation: RESET_SPEEDS }).then(() => {
+                    dispatch(fetchTeamCommands());
+                    _toast.success("속도값을 기본값으로 변경했습니다");
+                  }); 
+
+                  // 음성인식 수정 가능으로 변경
+                  dispatch(updateEditableSimilarWords(true));
                 }}
               />
               <Form.Check
@@ -46,8 +55,20 @@ const ControlMode = () => {
                 name="controlmode"
                 id="controlmode-rc"
                 onChange={() => {
+                  // controlMode 를 리모콘로 변경
                   dispatch(updateControlMode("rc")).then(unwrapResult)
-                    .then(data => { _toast.success("리모콘으로 변경했습니다"); });
+                    .then(data => {
+                      _toast.success("리모콘으로 변경했습니다");
+                    });
+
+                  // 속도값을 모두 지웠습니다
+                  client.mutate({ mutation: RESET_SPEEDS }).then(() => {
+                    dispatch(fetchTeamCommands());
+                    _toast.success("속도값을 모두 지웠습니다");
+                  });
+
+                  // 리모콘을 수정 가능으로 변경
+                  dispatch(updateEditableSpeeds(true));
                 }}
               />
             </Col>

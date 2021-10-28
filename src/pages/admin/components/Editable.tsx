@@ -32,7 +32,16 @@ const VCEditableSimilarWordsRadio: React.FC<ButtonContainerProps> = ({ variant, 
         type="radio"
         label="유사단어 수정 가능"
         id="vc-editable-similarwords-enable"
-        onChange={() => { dispatch(updateEditableSimilarWords(true)) }}>
+        onChange={() => {
+          // 수정 가능으로 바꾼다
+          dispatch(updateEditableSimilarWords(true));
+
+          // 유사단어를 모두 지운다
+          client.mutate({ mutation: VACATE_SIMILARWORDS }).then(() => {
+            dispatch(fetchTeamCommands());
+            _toast.success("유사단어를 모두 지웠습니다");
+          });
+        }}>
       </Form.Check>
       <Form.Check
         checked={!editableSimilarWords}
@@ -41,7 +50,15 @@ const VCEditableSimilarWordsRadio: React.FC<ButtonContainerProps> = ({ variant, 
         type="radio"
         label="유사단어 수정 불가능"
         id="vc-editable-similarwords-disable"
-        onChange={() => { dispatch(updateEditableSimilarWords(false)) }}>
+        onChange={() => {
+          dispatch(updateEditableSimilarWords(false));
+
+          // 유사단어를 초기화한다
+          client.mutate({ mutation: RESET_SIMILARWORDS }).then(() => {
+            dispatch(fetchTeamCommands());
+            _toast.success("유사단어를 기본값으로 변경합니다");
+          }); 
+        }}>
       </Form.Check>
     </Form>
   );
@@ -61,7 +78,15 @@ const RCEditableSpeedsRadio: React.FC<ButtonContainerProps> = ({ variant, openMo
         type="radio"
         label="속도값 수정 가능"
         id="vc-editable-speeds-enable"
-        onChange={() => { dispatch(updateEditableSpeeds(true)) }}>
+        onChange={() => {
+          dispatch(updateEditableSpeeds(true));
+
+          // 속도값을 모두 지웠습니다
+          client.mutate({ mutation: RESET_SPEEDS }).then(() => {
+            dispatch(fetchTeamCommands());
+            _toast.success("속도값을 모두 지웠습니다");
+          });
+        }}>
       </Form.Check>
       <Form.Check
         checked={!editableSpeeds}
@@ -70,7 +95,15 @@ const RCEditableSpeedsRadio: React.FC<ButtonContainerProps> = ({ variant, openMo
         type="radio"
         label="속도값 수정 불가능"
         id="vc-editable-speeds-disable"
-        onChange={() => { dispatch(updateEditableSpeeds(false)) }}>
+        onChange={() => {
+          dispatch(updateEditableSpeeds(false));
+
+          // 속도값을 기본값으로 변경합니다
+          client.mutate({ mutation: RESET_SPEEDS }).then(() => {
+            dispatch(fetchTeamCommands());
+            _toast.success("속도값을 기본값으로 변경했습니다");
+          });
+        }}>
       </Form.Check>
     </Form>
   );

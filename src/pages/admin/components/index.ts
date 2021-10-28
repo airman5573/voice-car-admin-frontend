@@ -1,6 +1,6 @@
 import AdminPassword from "./AdminPassword";
 import ControlMode from "./ControlMode";
-import Reset from "./Reset";
+import Reset from "./Editable";
 import TeamPasswords from "./TeamPasswords";
 import CommandTable from "./CommandTable";
 
