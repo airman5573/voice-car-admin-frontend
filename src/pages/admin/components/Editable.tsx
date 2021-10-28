@@ -82,7 +82,7 @@ const RCEditableSpeedsRadio: React.FC<ButtonContainerProps> = ({ variant, openMo
           dispatch(updateEditableSpeeds(true));
 
           // 속도값을 모두 지웠습니다
-          client.mutate({ mutation: RESET_SPEEDS }).then(() => {
+          client.mutate({ mutation: VACATE_SPEEDS }).then(() => {
             dispatch(fetchTeamCommands());
             _toast.success("속도값을 모두 지웠습니다");
           });

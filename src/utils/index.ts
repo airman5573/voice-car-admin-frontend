@@ -12,7 +12,7 @@ export const getErrorCode = (error: ApolloError): string => {
 
 const defaultToastOptions: ToastOptions = {
   position: "top-right",
-  autoClose: 2500,
+  autoClose: 5500,
   hideProgressBar: false,
   closeOnClick: true,
   pauseOnHover: true,
