@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 // import Admin from "./pages/admin/Admin";
 import Login from "./pages/login/Login";
+import Test from "./pages/test/Test";
 // import AuthRoute from "./pages/common/AuthRouter";
 import "./style/main.scss";
 import 'react-toastify/dist/ReactToastify.css';
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route exact path="/login">
             <Login></Login>
+          </Route>
+          <Route exact path="/test">
+            <Test></Test>
           </Route>
         </Switch>
       </Router>
