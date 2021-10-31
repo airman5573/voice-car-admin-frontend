@@ -11,7 +11,7 @@ type InitialState = {
 } & VC.DefaultNetworkingState;
 
 const initialState: InitialState = {
-  teamPasswords: Array(10).fill(0).map((v, i) => { return ({ team: i+1, password: '' } as VC.TeamPassword) }),
+  teamPasswords: Array(12).fill(0).map((v, i) => { return ({ team: i+1, password: '' } as VC.TeamPassword) }),
   ...DefaultNetworkingState
 };
 
