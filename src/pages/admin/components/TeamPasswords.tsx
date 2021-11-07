@@ -57,24 +57,24 @@ const TeamPasswords = ({}) => {
     }
 
     // validation - prefix(ab) error
-    const prefixErrorFields = arr.filter(tp => {
-      const { team, password } = tp;
+    // const prefixErrorFields = arr.filter(tp => {
+      // const { team, password } = tp;
       // 비밀번호의 길이가 0이면 입력 안한거니까 이거는 a혹은 b로 시작 안하는게 아니라, 그냥 검사 대상이 아닌거다.
-      if (password.length == 0) return false;
-      const regex = /^[a|b]/gi;
-      if (!regex.test(password)) {
-        setError(`${team-1}.password` as const, {
-          type: 'pattern',
-          message: ErrorMessages.TEAM_PASSWORD_PREFIX
-        });
-        return true;
-      }
-      return false;
-    });
-    if (prefixErrorFields.length > 0) {
-      _toast.error(ErrorMessages.TEAM_PASSWORD);
-      return;
-    }
+      // if (password.length == 0) return false;
+    //   const regex = /^[a|b]/gi;
+    //   if (!regex.test(password)) {
+    //     setError(`${team-1}.password` as const, {
+    //       type: 'pattern',
+    //       message: ErrorMessages.TEAM_PASSWORD_PREFIX
+    //     });
+    //     return true;
+    //   }
+    //   return false;
+    // });
+    // if (prefixErrorFields.length > 0) {
+    //   _toast.error(ErrorMessages.TEAM_PASSWORD);
+    //   return;
+    // }
 
     // validation - duplication
     const _teamPasswords: VC.TeamPassword[] = teamPasswords.map(tp => {
