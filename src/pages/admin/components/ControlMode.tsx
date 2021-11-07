@@ -79,9 +79,9 @@ const ControlMode = () => {
                   // 리모콘을 수정 가능으로 변경
                   dispatch(updateEditableSpeeds(true));
 
-                  client.mutate({ mutation: RESET_SIMILARWORDS }).then(() => {
+                  client.mutate({ mutation: VACATE_SIMILARWORDS }).then(() => {
                     dispatch(fetchTeamCommands());
-                    _toast.success("유사단어를 기본값으로 변경했습니다");
+                    _toast.success("유사단어를 모두 지웠습니다");
                   });
                 }}
               />
