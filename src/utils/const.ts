@@ -26,6 +26,9 @@ export const DefaultNetworkingState: VC.DefaultNetworkingState = {
   updatePending: false,
   updateError: undefined,
 }
+
+export const defaultTeams = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
+
 export const defaultCommands = {
   handOpen: {
     nameKR: "손펴",

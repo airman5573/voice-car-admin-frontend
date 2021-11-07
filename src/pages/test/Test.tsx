@@ -1,10 +1,9 @@
 import React, { FC, useState } from "react";
 import {Container, Row, Form, Button, ButtonGroup, ButtonToolbar} from "react-bootstrap";
 import { _toast } from "../../utils";
-import { testCmds, cmdNames } from "../../utils/const";
+import { testCmds, cmdNames, defaultTeams } from "../../utils/const";
 
 const Test = () => {
-  const defaultTeams = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12];
   const [activeTeams, setActiveTeams] = useState<Array<number>>([]);
   const [activeCommands, setActiveCommands] = useState<Array<string>>([]);
   const addToActiveTeamList = (team: number) => {

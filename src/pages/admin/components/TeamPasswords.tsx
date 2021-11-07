@@ -4,7 +4,7 @@ import { RootState, useAppDispatch, useAppSelector } from "../../../redux";
 import { useForm } from "react-hook-form";
 import { VC } from "../../../utils/types";
 import { _toast } from "../../../utils";
-import { ErrorMessages } from "../../../utils/const";
+import { ErrorMessages, defaultTeams } from "../../../utils/const";
 import { fetchAllTeamPasswords, updateTeamPasswords } from "../../../redux/features/teamPasswordSlice";
 import * as _ from "lodash";
 import { unwrapResult } from "@reduxjs/toolkit";
@@ -12,7 +12,7 @@ import { toast } from "react-toastify";
 
 const TeamPasswords = ({}) => {
   const dispatch = useAppDispatch();
-  const { register, handleSubmit, watch, formState: { errors }, setError, reset } = useForm<VC.TeamPassword[]>();
+  const { register, handleSubmit, setValue, watch, formState: { errors }, setError, reset } = useForm<VC.TeamPassword[]>();
   useEffect(() => {
     dispatch(fetchAllTeamPasswords());
   }, []);
@@ -114,6 +114,17 @@ const TeamPasswords = ({}) => {
     });
   };
 
+  const resetPasswords = () => {
+    let teamPasswords: VC.TeamPassword[] = defaultTeams.map((team) => {
+      return {team, password: '0'}
+    });
+    dispatch(updateTeamPasswords(teamPasswords)).then(unwrapResult)
+    .then((data) => {
+      _toast.success("성공적으로 비밀번호를 초기화했습니다");
+      reset();
+    });
+  }
+
   return (
     <Card>
       <Card.Body>
@@ -160,7 +171,10 @@ const TeamPasswords = ({}) => {
               </Form.Group>);
             })
           }
-          <Button type="submit">저장</Button>
+          <div className="d-flex justify-content-between">
+            <Button type="submit" className="me-3">저장</Button>
+            <Button variant="danger" type="button" onClick={resetPasswords}>초기화</Button>
+          </div>
         </Form>
       </Card.Body>
     </Card>
