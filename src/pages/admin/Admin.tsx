@@ -17,7 +17,6 @@ function Admin() {
           breakpointCols={breakpointColumnsObj}
           className="my-masonry-grid"
           columnClassName="my-masonry-grid_column">
-            <AdminPassword />
             <TeamPasswords />
             <ControlMode />
             <Reset />
